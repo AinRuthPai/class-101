@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Window Load</title>
+    <script src="test.js" defer></script>
+  </head>
+  <body>
+    <!-- 브라우저가 html 파일을 열게 되면
+      처음부터 html요소를 읽어서 DOM 요소로 변환한 후
+      script 부분을 만나면 window에 이벤트리스너를 등록
+
+      window에서 페이지에 필요한 모든 리소스가 로딩이 완료되면
+      콜백함수가 출력됨 -->
+
+    <script>
+      // 리소스(페이지 안의 폰트나 이미지 등)다운로드가
+      // 완료되면 호출됨
+      window.addEventListener("load", () => {
+        console.log("load");
+      });
+
+      // document만(html) 완료가 되면 호출됨
+      window.addEventListener("DOMContentLoaded", () => {
+        console.log("DOMContentLoaded");
+      });
+
+      // unload 이전에 호출
+      window.addEventListener("beforeunload", () => {
+        console.log("beforeunload");
+      });
+
+      // 리소스가 전부 unload되었을 때 호출
+      window.addEventListener("unload", () => {
+        console.log("unload");
+      });
+    </script>
+  </body>
+</html>
