@@ -11,3 +11,5 @@
 5. rabbit // 윈도우 스크롤 응용 (당근과 토끼)
 
 6. dom code // 웹페이지 요소 분석
+
+7. shopping // to do list와 동일한 로직의 웹
