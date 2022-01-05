@@ -1,0 +1,71 @@
+<!-- 
+    - capturing & bubbling
+capturing -> 부모부터 자식까지 차례대로 이벤트 핸들러를 호출함
+bubbling -> 역순으로 이벤트 핸들러 호출 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .outer {
+        width: 500px;
+        height: 500px;
+        background-color: yellow;
+      }
+      .middle {
+        width: 50%;
+        height: 50%;
+        background-color: pink;
+        margin: auto;
+        transform: translateY(50%);
+      }
+      button {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="outer">
+      <div class="middle">
+        <button>Click Me</button>
+      </div>
+    </div>
+    <script>
+      const outer = document.querySelector(".outer");
+      const middle = document.querySelector(".middle");
+      const button = document.querySelector("button");
+
+      outer.addEventListener("click", (event) => {
+        if (event.target !== event.currentTarget) {
+          return;
+        }
+        console.log(`outer : ${event.currentTarget}, ${event.target}`);
+      });
+      middle.addEventListener("click", (event) => {
+        if (event.target !== event.currentTarget) {
+          return;
+        }
+        console.log(`middle : ${event.currentTarget}, ${event.target}`);
+      });
+      button.addEventListener("click", (event) => {
+        console.log(`button : ${event.currentTarget}, ${event.target}`);
+        // 가능하면 절대 사용하지 말 것
+        // 버블링이 일어나지 않게 함
+        // event.stopPropagation();
+      });
+      button.addEventListener("click", (event) => {
+        console.log(`button2 : ${event.currentTarget}, ${event.target}`);
+        // 다른 요소를 무시
+        // event.stopImmediatePropagation();
+      });
+    </script>
+  </body>
+</html>

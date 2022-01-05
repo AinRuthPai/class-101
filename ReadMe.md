@@ -13,3 +13,8 @@
 6. dom code // 웹페이지 요소 분석
 
 7. shopping // to do list와 동일한 로직의 웹
+
+8. event // capturing & bubbling, 브라우저 기본 기능 취소(preventDefault),
+   이벤트 위임
+
+9. shopping // 이벤트 위임을 이용한 앱 개선
