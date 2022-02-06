@@ -1,9 +1,91 @@
 "use strict";
 const CARROT_SIZE = 80;
+const CARROT_COUNT = 5;
+const BUG_COUNT = 5;
+const GAME_DURATION_SEC = 5;
+
 const field = document.querySelector(".game__field");
 const fieldRect = field.getBoundingClientRect();
+const gameBtn = document.querySelector(".game__button");
+const gameTimer = document.querySelector(".game__timer");
+const gameScore = document.querySelector(".game__score");
+
+const popUp = document.querySelector(".pop-up");
+const popUpText = document.querySelector(".pop-up__message");
+const popUpRefresh = document.querySelector(".pop-up__refresh");
+
+// 게임 시작 전 초기값 설정
+let started = false;
+let score = 0;
+let timer = undefined;
+
+gameBtn.addEventListener("click", () => {
+  if (started) {
+    stopGame();
+  } else {
+    startGame();
+  }
+  started = !started;
+});
+
+function startGame() {
+  initGame();
+  showStopButton();
+  showTimerAndScore();
+  startGameTimer();
+}
+
+function stopGame() {
+  stopGameTimer();
+  hideGameButton();
+  showPopUpWithText("Replay?");
+}
+
+function showStopButton() {
+  const icon = gameBtn.querySelector(".fa-play");
+  icon.classList.add("fa-stop");
+  icon.classList.remove("fa-play");
+}
+
+function hideGameButton() {
+  gameBtn.style.visibility = "hidden";
+}
+
+function showTimerAndScore() {
+  gameTimer.style.visibility = "visible";
+  gameScore.style.visibility = "visible";
+}
+
+function startGameTimer() {
+  let remainingTimeSec = GAME_DURATION_SEC;
+  updateTimerText(remainingTimeSec);
+  timer = setInterval(() => {
+    if (remainingTimeSec <= 0) {
+      clearInterval(timer);
+      return;
+    }
+    updateTimerText(--remainingTimeSec);
+  }, 1000);
+}
+
+function stopGameTimer() {
+  clearInterval(timer);
+}
+
+function updateTimerText(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  gameTimer.innerText = `${minutes}:${seconds}`;
+}
+
+function showPopUpWithText(text) {
+  popUpText.innerText = text;
+  popUp.classList.remove("pop-up--hide");
+}
 
 function initGame() {
+  field.innerHTML = "";
+  gameScore.innerText = CARROT_COUNT;
   // 벌레와 당근을 생성한 뒤 필드에 추가
   addItem("carrot", 5, "./img/carrot.png");
   addItem("bug", 5, "./img/bug.png");
